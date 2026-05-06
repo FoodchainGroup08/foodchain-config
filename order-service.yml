@@ -1,0 +1,35 @@
+server:
+  port: 8083
+  servlet:
+    context-path: /api
+
+spring:
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:3306/order_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: 6379
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    topic:
+      order-received: order.received
+      order-status-updated: order.status.updated
+
+logging:
+  level:
+    root: INFO
+    com.microservices: DEBUG
