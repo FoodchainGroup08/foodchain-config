@@ -18,5 +18,9 @@ spring:
   datasource:
     hikari:
       maximum-pool-size: 3
-      minimum-idle: 1
-      initialization-fail-timeout: 0
+      minimum-idle: 0
+      initialization-fail-timeout: -1
+      connection-timeout: 5000
+  jpa:
+    hibernate:
+      ddl-auto: none
