@@ -15,3 +15,7 @@ management:
 spring:
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+  datasource:
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 2
