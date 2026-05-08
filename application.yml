@@ -15,3 +15,14 @@ management:
 spring:
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:29092}
+
+  datasource:
+    hikari:
+      maximum-pool-size: 3
+      minimum-idle: 0
+      initialization-fail-timeout: -1
+      connection-timeout: 5000
+  jpa:
+    hibernate:
+      ddl-auto: none
+
