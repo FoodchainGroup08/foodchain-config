@@ -23,25 +23,25 @@ spring:
           predicates:
             - Path=/api/kitchen/**
 
-        - id: analytics-service
-          uri: lb://analytics-service
+        - id: analytics-report-service-analytics
+          uri: lb://analytics-report-service
           predicates:
             - Path=/api/analytics/**
 
-        - id: report-service
-          uri: lb://report-service
+        - id: analytics-report-service-reports
+          uri: lb://analytics-report-service
           predicates:
             - Path=/api/reports/**
 
-        - id: notification-service
-          uri: lb://notification-service
+        - id: notifications-service
+          uri: lb://notifications-service
           predicates:
             - Path=/api/notifications/**
 
-        - id: notification-service-ws
-          uri: lb://notification-service
+        - id: notifications-service-ws
+          uri: lb://notifications-service
           predicates:
-            - Path=/ws-notification/**
+            - Path=/ws-notifications/**
 
         # ── OpenAPI docs proxy routes ─────────────────────────────────────────
         - id: order-service-docs
@@ -72,26 +72,19 @@ spring:
           filters:
             - RewritePath=/v3/api-docs/kitchen-service, /api/v3/api-docs
 
-        - id: analytics-service-docs
-          uri: lb://analytics-service
+        - id: analytics-report-service-docs
+          uri: lb://analytics-report-service
           predicates:
-            - Path=/v3/api-docs/analytics-service
+            - Path=/v3/api-docs/analytics-report-service
           filters:
-            - RewritePath=/v3/api-docs/analytics-service, /api/v3/api-docs
+            - RewritePath=/v3/api-docs/analytics-report-service, /api/v3/api-docs
 
-        - id: report-service-docs
-          uri: lb://report-service
+        - id: notifications-service-docs
+          uri: lb://notifications-service
           predicates:
-            - Path=/v3/api-docs/report-service
+            - Path=/v3/api-docs/notifications-service
           filters:
-            - RewritePath=/v3/api-docs/report-service, /api/v3/api-docs
-
-        - id: notification-service-docs
-          uri: lb://notification-service
-          predicates:
-            - Path=/v3/api-docs/notification-service
-          filters:
-            - RewritePath=/v3/api-docs/notification-service, /api/v3/api-docs
+            - RewritePath=/v3/api-docs/notifications-service, /api/v3/api-docs
 
 jwt:
   secret: ${JWT_SECRET:your-256-bit-secret-key-change-this-in-production-min-32-chars}
@@ -108,11 +101,9 @@ springdoc:
         url: /v3/api-docs/branch-service
       - name: Kitchen Service
         url: /v3/api-docs/kitchen-service
-      - name: Analytics Service
-        url: /v3/api-docs/analytics-service
-      - name: Report Service
-        url: /v3/api-docs/report-service
-      - name: Notification Service
-        url: /v3/api-docs/notification-service
+      - name: Analytics & Report Service
+        url: /v3/api-docs/analytics-report-service
+      - name: Notifications Service
+        url: /v3/api-docs/notifications-service
   api-docs:
     enabled: true
