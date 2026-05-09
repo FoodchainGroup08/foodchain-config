@@ -33,6 +33,16 @@ spring:
           predicates:
             - Path=/api/reports/**
 
+        - id: notification-service
+          uri: lb://notification-service
+          predicates:
+            - Path=/api/notifications/**
+
+        - id: notification-service-ws
+          uri: lb://notification-service
+          predicates:
+            - Path=/ws-notification/**
+
         # ── OpenAPI docs proxy routes ─────────────────────────────────────────
         - id: order-service-docs
           uri: lb://order-service
@@ -76,6 +86,13 @@ spring:
           filters:
             - RewritePath=/v3/api-docs/report-service, /api/v3/api-docs
 
+        - id: notification-service-docs
+          uri: lb://notification-service
+          predicates:
+            - Path=/v3/api-docs/notification-service
+          filters:
+            - RewritePath=/v3/api-docs/notification-service, /api/v3/api-docs
+
 jwt:
   secret: ${JWT_SECRET:your-256-bit-secret-key-change-this-in-production-min-32-chars}
 
@@ -95,5 +112,7 @@ springdoc:
         url: /v3/api-docs/analytics-service
       - name: Report Service
         url: /v3/api-docs/report-service
+      - name: Notification Service
+        url: /v3/api-docs/notification-service
   api-docs:
     enabled: true
