@@ -2,30 +2,98 @@ spring:
   cloud:
     gateway:
       routes:
+        # ── Service routes ────────────────────────────────────────────────────
         - id: order-service
           uri: lb://order-service
           predicates:
             - Path=/api/orders/**
+
         - id: menu-service
           uri: lb://menu-service
           predicates:
             - Path=/api/menu/**
+
         - id: branch-service
           uri: lb://branch-service
           predicates:
             - Path=/api/branch/**
+
         - id: kitchen-service
           uri: lb://kitchen-service
           predicates:
             - Path=/api/kitchen/**
+
         - id: analytics-service
           uri: lb://analytics-service
           predicates:
             - Path=/api/analytics/**
+
         - id: report-service
           uri: lb://report-service
           predicates:
             - Path=/api/reports/**
 
+        # ── OpenAPI docs proxy routes ─────────────────────────────────────────
+        - id: order-service-docs
+          uri: lb://order-service
+          predicates:
+            - Path=/v3/api-docs/order-service
+          filters:
+            - RewritePath=/v3/api-docs/order-service, /api/v3/api-docs
+
+        - id: menu-service-docs
+          uri: lb://menu-service
+          predicates:
+            - Path=/v3/api-docs/menu-service
+          filters:
+            - RewritePath=/v3/api-docs/menu-service, /api/v3/api-docs
+
+        - id: branch-service-docs
+          uri: lb://branch-service
+          predicates:
+            - Path=/v3/api-docs/branch-service
+          filters:
+            - RewritePath=/v3/api-docs/branch-service, /api/v3/api-docs
+
+        - id: kitchen-service-docs
+          uri: lb://kitchen-service
+          predicates:
+            - Path=/v3/api-docs/kitchen-service
+          filters:
+            - RewritePath=/v3/api-docs/kitchen-service, /api/v3/api-docs
+
+        - id: analytics-service-docs
+          uri: lb://analytics-service
+          predicates:
+            - Path=/v3/api-docs/analytics-service
+          filters:
+            - RewritePath=/v3/api-docs/analytics-service, /api/v3/api-docs
+
+        - id: report-service-docs
+          uri: lb://report-service
+          predicates:
+            - Path=/v3/api-docs/report-service
+          filters:
+            - RewritePath=/v3/api-docs/report-service, /api/v3/api-docs
+
 jwt:
   secret: ${JWT_SECRET:your-256-bit-secret-key-change-this-in-production-min-32-chars}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    urls:
+      - name: Order Service
+        url: /v3/api-docs/order-service
+      - name: Menu Service
+        url: /v3/api-docs/menu-service
+      - name: Branch Service
+        url: /v3/api-docs/branch-service
+      - name: Kitchen Service
+        url: /v3/api-docs/kitchen-service
+      - name: Analytics Service
+        url: /v3/api-docs/analytics-service
+      - name: Report Service
+        url: /v3/api-docs/report-service
+  api-docs:
+    enabled: true
