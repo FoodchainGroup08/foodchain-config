@@ -3,6 +3,16 @@ spring:
     gateway:
       routes:
         # ── Service routes ────────────────────────────────────────────────────
+        - id: user-service-auth
+          uri: lb://user-service
+          predicates:
+            - Path=/api/auth/**
+
+        - id: user-service-users
+          uri: lb://user-service
+          predicates:
+            - Path=/api/users/**
+
         - id: order-service
           uri: lb://order-service
           predicates:
@@ -86,6 +96,13 @@ spring:
           filters:
             - RewritePath=/v3/api-docs/notifications-service, /api/v3/api-docs
 
+        - id: user-service-docs
+          uri: lb://user-service
+          predicates:
+            - Path=/v3/api-docs/user-service
+          filters:
+            - RewritePath=/v3/api-docs/user-service, /api/v3/api-docs
+
 jwt:
   secret: ${JWT_SECRET:your-256-bit-secret-key-change-this-in-production-min-32-chars}
 
@@ -105,5 +122,7 @@ springdoc:
         url: /v3/api-docs/analytics-report-service
       - name: Notifications Service
         url: /v3/api-docs/notifications-service
+      - name: User Service
+        url: /v3/api-docs/user-service
   api-docs:
     enabled: true
