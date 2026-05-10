@@ -16,37 +16,47 @@ spring:
         - id: order-service
           uri: lb://order-service
           predicates:
-            - Path=/api/orders/**
+            - Path=/api/v1/orders/**
 
         - id: menu-service
           uri: lb://menu-service
           predicates:
-            - Path=/api/menu/**
+            - Path=/api/v1/menu/**
 
         - id: branch-service
           uri: lb://branch-service
           predicates:
-            - Path=/api/branch/**
+            - Path=/api/v1/branches/**
 
         - id: kitchen-service
           uri: lb://kitchen-service
           predicates:
-            - Path=/api/kitchen/**
+            - Path=/api/v1/kitchen/**
 
         - id: analytics-report-service-analytics
           uri: lb://analytics-report-service
           predicates:
-            - Path=/api/analytics/**
+            - Path=/api/v1/analytics/**
 
         - id: analytics-report-service-reports
           uri: lb://analytics-report-service
           predicates:
-            - Path=/api/reports/**
+            - Path=/api/v1/reports/**
+
+        - id: analytics-report-service-admin
+          uri: lb://analytics-report-service
+          predicates:
+            - Path=/api/v1/admin/**
+
+        - id: analytics-report-service-manager
+          uri: lb://analytics-report-service
+          predicates:
+            - Path=/api/v1/manager/**
 
         - id: notifications-service
           uri: lb://notifications-service
           predicates:
-            - Path=/api/notifications/**
+            - Path=/api/v1/notifications/**
 
         - id: notifications-service-ws
           uri: lb://notifications-service
