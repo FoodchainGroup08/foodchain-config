@@ -20,7 +20,7 @@ spring:
         - id: branch-service
           uri: lb://branch-service
           predicates:
-            - Path=/api/branch/**
+            - Path=/api/v1/branch/**
 
         - id: kitchen-service
           uri: lb://kitchen-service
@@ -35,7 +35,7 @@ spring:
         - id: analytics-report-service-reports
           uri: lb://analytics-report-service
           predicates:
-            - Path=/api/reports/**
+            - Path=/api/v1/reports/**
 
         - id: notifications-service
           uri: lb://notifications-service
