@@ -6,7 +6,22 @@ spring:
           enabled: true
           lower-case-service-id: true
       routes:
-        # ── Service routes (API v1) ──────────────────────────────────────────
+        # Service routes (API v1)
+        - id: user-service-auth
+          uri: lb://user-service
+          predicates:
+            - Path=/api/v1/auth/**
+
+        - id: user-service-users
+          uri: lb://user-service
+          predicates:
+            - Path=/api/v1/users/**
+
+        - id: user-service-admin-users
+          uri: lb://user-service
+          predicates:
+            - Path=/api/v1/admin/users/**
+
         - id: order-service
           uri: lb://order-service
           predicates:
@@ -17,10 +32,15 @@ spring:
           predicates:
             - Path=/api/v1/menu/**
 
-        - id: branch-service
+        - id: branch-service-branch
           uri: lb://branch-service
           predicates:
             - Path=/api/v1/branch/**
+
+        - id: branch-service-branches
+          uri: lb://branch-service
+          predicates:
+            - Path=/api/v1/branches,/api/v1/branches/**
 
         - id: kitchen-service
           uri: lb://kitchen-service
@@ -37,6 +57,16 @@ spring:
           predicates:
             - Path=/api/v1/reports/**
 
+        - id: analytics-manager
+          uri: lb://analytics-report-service
+          predicates:
+            - Path=/api/v1/manager/**
+
+        - id: analytics-admin
+          uri: lb://analytics-report-service
+          predicates:
+            - Path=/api/v1/admin/analytics/**
+
         - id: notifications-service
           uri: lb://notifications-service
           predicates:
@@ -47,42 +77,7 @@ spring:
           predicates:
             - Path=/ws-notifications/**
 
-        # ── Auth & User routes (user-service) ────────────────────────────────
-        - id: user-service-auth
-          uri: lb://user-service
-          predicates:
-            - Path=/api/v1/auth/**
-
-        - id: user-service-users
-          uri: lb://user-service
-          predicates:
-            - Path=/api/v1/users/**
-
-        - id: user-service-admin-users
-          uri: lb://user-service
-          predicates:
-            - Path=/api/v1/admin/users/**
-
-        # ── Branches (canonical /branches path, branch-service) ──────────────
-        # Include exact /api/v1/branches + subpaths (some Gateway versions need both)
-        - id: branch-service-branches
-          uri: lb://branch-service
-          predicates:
-            - Path=/api/v1/branches,/api/v1/branches/**
-
-        # ── Manager dashboard (analytics-report-service) ─────────────────────
-        - id: analytics-manager
-          uri: lb://analytics-report-service
-          predicates:
-            - Path=/api/v1/manager/**
-
-        # ── Admin analytics (analytics-report-service) ─────────────────────────
-        - id: analytics-admin
-          uri: lb://analytics-report-service
-          predicates:
-            - Path=/api/v1/admin/analytics/**
-
-        # ── Raw WebSocket endpoints (notifications-service) ──────────────────
+        # Raw WebSocket endpoints
         - id: ws-kitchen
           uri: lb:ws://notifications-service
           predicates:
@@ -98,7 +93,7 @@ spring:
           predicates:
             - Path=/ws/manager/**
 
-        # ── OpenAPI docs proxy routes ─────────────────────────────────────────
+        # OpenAPI docs proxy routes
         - id: user-service-docs
           uri: lb://user-service
           predicates:
@@ -151,7 +146,7 @@ spring:
       globalcors:
         cors-configurations:
           "[/**]":
-            allowed-origins: "*"
+            allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173,http://localhost:3000}
             allowed-methods: "*"
             allowed-headers: "*"
 
