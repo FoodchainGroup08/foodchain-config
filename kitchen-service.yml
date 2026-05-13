@@ -3,6 +3,10 @@ server:
   servlet:
     context-path: /api
 
+app:
+  order-service:
+    url: ${ORDER_SERVICE_URL:http://order-service:8083}
+
 spring:
   data:
     redis:
