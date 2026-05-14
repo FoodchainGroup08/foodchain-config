@@ -22,7 +22,9 @@ spring:
         - id: user-service-admin-users
           uri: lb://user-service
           predicates:
-            - Path=/api/v1/admin/users/**
+            - Path=/api/v1/admin/users/**,/api/v1/admin/users
+          filters:
+            - RewritePath=/api/v1/admin/users(?<rest>.*), /api/v1/users${rest}
 
         - id: order-service
           uri: lb://order-service
@@ -75,7 +77,7 @@ spring:
             - Path=/api/v1/notifications/**
 
         - id: notifications-service-ws
-          uri: lb://notifications-service
+          uri: lb:ws://notifications-service
           predicates:
             - Path=/ws-notifications/**
 
@@ -176,6 +178,7 @@ spring:
               - OPTIONS
             allowed-headers: "*"
             exposed-headers: "Authorization"
+            allow-credentials: true
 
 jwt:
   secret: ${JWT_SECRET:your-256-bit-secret-key-change-this-in-production-min-32-chars}
