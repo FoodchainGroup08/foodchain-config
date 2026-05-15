@@ -80,6 +80,8 @@ spring:
           uri: lb:ws://notifications-service
           predicates:
             - Path=/ws-notifications/**
+          filters:
+            - RewritePath=/ws-notifications(?<segment>.*), /api/ws-notifications${segment}
 
         # OAuth2 server-side redirect routes
         - id: user-service-oauth2
@@ -101,16 +103,22 @@ spring:
           uri: lb:ws://notifications-service
           predicates:
             - Path=/ws/kitchen/**
+          filters:
+            - RewritePath=/ws/kitchen(?<segment>.*), /api/ws/kitchen${segment}
 
         - id: ws-orders
           uri: lb:ws://notifications-service
           predicates:
             - Path=/ws/orders/**
+          filters:
+            - RewritePath=/ws/orders(?<segment>.*), /api/ws/orders${segment}
 
         - id: ws-manager
           uri: lb:ws://notifications-service
           predicates:
             - Path=/ws/manager/**
+          filters:
+            - RewritePath=/ws/manager(?<segment>.*), /api/ws/manager${segment}
 
         # OpenAPI docs proxy routes
         - id: user-service-docs
