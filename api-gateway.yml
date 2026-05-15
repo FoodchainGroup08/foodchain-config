@@ -2,7 +2,7 @@ spring:
   cloud:
     gateway:
       default-filters:
-        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials RETAIN_FIRST
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials Vary RETAIN_FIRST
       discovery:
         locator:
           enabled: true
@@ -166,9 +166,10 @@ spring:
         cors-configurations:
           "[/**]":
             allowed-origins:
+              - "https://foodchain.live"
+              - "https://www.foodchain.live"
               - "http://localhost:5173"
               - "http://localhost:3000"
-              - "http://54.235.78.18:8080"
             allowed-methods:
               - GET
               - POST
@@ -179,6 +180,7 @@ spring:
             allowed-headers: "*"
             exposed-headers: "Authorization"
             allow-credentials: true
+            max-age: 3600
 
 jwt:
   secret: ${JWT_SECRET:your-256-bit-secret-key-change-this-in-production-min-32-chars}
