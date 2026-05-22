@@ -33,6 +33,12 @@ spring:
       order-received: order.received
       order-status-updated: order.status.updated
 
+paystack:
+  secret-key: ${PAYSTACK_SECRET_KEY:}
+  public-key: ${PAYSTACK_PUBLIC_KEY:}
+  base-url: https://api.paystack.co
+  callback-url: ${PAYSTACK_CALLBACK_URL:https://foodchain.live/payment/callback}
+
 logging:
   level:
     root: INFO
