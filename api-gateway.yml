@@ -76,6 +76,20 @@ spring:
           predicates:
             - Path=/api/v1/admin/analytics/**
 
+        # ── v2 routes ─────────────────────────────────────────────────────────
+
+        - id: user-service-preferences-v2
+          uri: lb://user-service
+          predicates:
+            - Path=/api/v2/users/preferences
+
+        - id: menu-service-recommendations-v2
+          uri: lb://menu-service
+          predicates:
+            - Path=/api/v2/menu/recommendations
+
+        # ──────────────────────────────────────────────────────────────────────
+
         - id: notifications-service
           uri: lb://notifications-service
           predicates:
