@@ -192,7 +192,13 @@ spring:
       globalcors:
         cors-configurations:
           "[/**]":
-            allowed-origin-patterns: "*"
+            allowed-origin-patterns:
+              - "https://foodchain.live"
+              - "https://www.foodchain.live"
+              - "https://api.foodchain.live"
+              - "http://54.235.78.18:[*]"
+              - "http://localhost:[*]"
+              - "http://127.0.0.1:[*]"
             allowed-methods:
               - GET
               - POST
